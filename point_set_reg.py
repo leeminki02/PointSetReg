@@ -14,10 +14,10 @@ cloud1_color = point_clrs
 # Method 1: CPD (Coherent Point Drift)
 from pycpd import RigidRegistration
 
-for i in range(30):
-    seed = i*17
+for i in range(20):
+    seed = i + 1000
     np.random.seed(seed)
-    cloud2, cloud2_color, tvec, rmat = psr.make_transformation(cloud1, cloud1_color, 
+    cloud2, cloud2_color, tvec, rmat, scale = psr.make_transformation(cloud1, cloud1_color, 
                                                             noiseThrsh=0.003, noisePoints=20)
 
     # plot the data of cloud2
@@ -44,13 +44,9 @@ for i in range(30):
     # Compute the registration error
     # save the registration error as txt file
     with open('results/clouds_'+str(seed)+'_regerr.txt', 'w') as f:
-        f.write(">> True S/R/T\n")
-        f.write(str(np.round(rmat, 3))+'\n')
-        f.write(str(np.round(tvec, 3))+'\n')
-        f.write(">> Estimated S/R/T\n")
-        f.write(str(s_reg)+'\n')
-        f.write(str(np.round(R_reg, 3))+'\n')
-        f.write(str(np.round(-t_reg, 3))+'\n')
-    print(">> True S/R/T", 1, np.round(rmat, 3), np.round(tvec, 3), sep='\n')
-    print(">> Estimated S/R/T", s_reg, np.round(R_reg, 3), np.round(-t_reg, 3), sep='\n')
+        f.write("true,estimated\n")
+        f.write(str(np.round(1/scale, 4))+','+str(np.round( s_reg, 4))+'\n')
+        f.write(str(np.round(   rmat.ravel(), 4))+','+str(np.round( R_reg.ravel(), 4))+'\n')
+        f.write(str(np.round(   tvec, 4))+','+str(np.round(-t_reg, 4))+'\n')
+    print(seed)
 

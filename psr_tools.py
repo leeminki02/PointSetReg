@@ -71,12 +71,13 @@ def make_transformation(points, colors, noiseThrsh=0.005, noisePoints=30):
     # translation
     t = np.array([0.1, 0.1, 0.2])
     # rotation
-    theta = np.random.random() * np.pi
+    theta = np.random.random() * np.pi/2
     R = np.array([[np.cos(theta), -np.sin(theta), 0],
                 [np.sin(theta), np.cos(theta), 0],
                 [0, 0, 1]])
-
+    # scaling: random between 0.5~2.0
+    s = np.random.random()*1.5 + 0.5
     
     # apply transformation to cloud2
-    cloud2 = np.dot(R, cloud2) + t.reshape(-1,1)
-    return cloud2, cloud2_color, t, R
+    cloud2 = s * np.dot(R, cloud2) + t.reshape(-1,1)
+    return cloud2, cloud2_color, t, R, s
