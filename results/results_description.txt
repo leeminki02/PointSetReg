@@ -1,3 +1,4 @@
 0~17*n: cases with maximum np.pi rotation. these cases failed when rotation is bigger than 0.5pi, so next iterations will limit rotation to (0~1/2 pi)
 
-1000+ 0~17*n
+1000s: cases with 0~0.5pi rotation, with text result generation for s, r, t as .txt file.
+
